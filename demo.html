@@ -2,22 +2,36 @@
 <html>
 <head>
 	<title></title>
+<style>
+.card {border:1pt solid black;margin:1em;width:50%;}
+body {
+font: normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+
+
+
+}
+.titleX{color:red;margin-top:1em;text-transform:uppercase;text-align:left;font-weight:bold;text-decoration:underline}
+</style>
 </head>
 <body>
-<div id='h2hpoll'></div>
-<div id='trump'></div>
-<div id='generic'></div>
-<div id='senate'></div>
-<div id='delegateCount'></div>
-<div id='houseBrute'></div>
-<div id='house'></div>
-<div id='governor'></div>
-	<div id='chart_divHOM'></div>
+<div class='titleX'>h2hpoll</div><div class='card' id='h2hpoll'></div>
+<div class='titleX'>trump</div><div class='card' id='trump'></div>
+<div class='titleX'>generic</div><div class='card' id='generic'></div>
+<div class='titleX'>senate</div><div class='card' id='senate'></div>
+<div class='titleX'>delegateCount</div><div class='card' id='delegateCount'></div>
+<div class='titleX'>houseBrute</div><div class='card' id='houseBrute'></div>
+<div class='titleX'>house</div><div class='card' id='house'></div>
+<div class='titleX'>governor</div><div class='card' id='governor'></div>
+
+<div class='titleX'>chart_divHOM</div>
+	<div class="card" id='chart_divHOM'></div>
+<div class='titleX'>oddsDems</div>
+<div class="card" id='oddsDems'></div>
 
 </body>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script>
-		var trumpometer = -113, //tom - put the TrumpOMeter Number here
+		var trumpometer = -113, oddsDems={Biden:78,Senate:55,House:99},//tom - put the TrumpOMeter Number here
 	h2hpoll = {
 		"National Polls": [{
 			month: "Feb",
@@ -489,6 +503,13 @@ var h2h = {
 function checkColor(t) {
 	return "<td style='text-align:center;font-weight:bold;font-size:300%;color:" + (50 <= t ? "blue" : "red") + "'>" + t + "%</td>"
 }
+function createTabSimple(t, e) {
+	var a, r = "<p>"+e+'</p><table><tbody style="color:blue;font-size:105%;font-weight:bold">';
+for (a in t)
+{r+='<tr><td >'+a+'</td><td>'+t[a]+'%</td></tr>'}
+
+	return r + "</tbody></table>"
+}
 window.onload = function() {
 	var t = {
 		h2hpoll: createTabPoll(h2hpoll, "Head to Head Poll"),
@@ -499,9 +520,10 @@ window.onload = function() {
 		houseBrute: createTabDR(houseBrute, "House Projection"),
 		house: createTabElec(house, "House Projection"),
 		governor: createTabDR(governor, "Governor Projection"),
+oddsDems:createTabSimple(oddsDems,'Odds of Democrats Winning in 2020')
 		
 	};
-	for (var e in t) document.getElementById(e).innerHTML = t[e];
+	for (var e in t){console.log(e); document.getElementById(e).innerHTML = t[e];}
 	google.charts.load("current", {
 		packages: ["gauge"]
 	}), google.charts.setOnLoadCallback(drawChart)
